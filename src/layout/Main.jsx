@@ -18,28 +18,37 @@ class Main extends React.Component {
 
   async componentDidMount() {
     console.log('componentDidMount');
-    const respons = await fetch(
-      `http://www.omdbapi.com/?apikey=${API_KEY}&s=matrix`
-    );
-    const data = await respons.json();
-    // .then((response) => response.json())
-    // .then((data) => console.log(data))
-    // .then((data) => {
-    this.setState({ movies: data.Search || [], loading: false });
-    // })
-    // .then(console.log(this.state.movies));
+    try {
+      const respons = await fetch(
+        `https://www.omdbapi.com/?apikey=${API_KEY}&s=matrix`
+      );
+      const data = await respons.json();
+      // .then((response) => response.json())
+      // .then((data) => console.log(data))
+      // .then((data) => {
+      this.setState({ movies: data.Search || [], loading: false });
+      // })
+      // .then(console.log(this.state.movies));
+    } catch (err) {
+      console.error(err);
+      this.setState({ loading: false });
+    }
   }
 
   searchMovies = (str, type = 'all') => {
     this.setState({ loading: true });
     fetch(
-      `http://www.omdbapi.com/?apikey=${API_KEY}&s=${str}${
+      `https://www.omdbapi.com/?apikey=${API_KEY}&s=${str}${
         type !== 'all' ? `&type=${type}` : ''
       }`
     )
       .then((response) => response.json())
       .then((data) => {
         this.setState({ movies: data.Search || [], loading: false });
+      })
+      .catch((err) => {
+        console.error(err);
+        this.setState({ loading: false });
       });
   };
 
