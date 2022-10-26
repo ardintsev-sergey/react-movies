@@ -5,7 +5,6 @@ import { Search } from '../components/Search';
 // import { env } from '../../.env.local';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
-console.log(API_KEY);
 
 class Main extends React.Component {
   constructor() {
@@ -17,18 +16,12 @@ class Main extends React.Component {
   }
 
   async componentDidMount() {
-    console.log('componentDidMount');
     try {
       const respons = await fetch(
         `https://www.omdbapi.com/?apikey=${API_KEY}&s=matrix`
       );
       const data = await respons.json();
-      // .then((response) => response.json())
-      // .then((data) => console.log(data))
-      // .then((data) => {
       this.setState({ movies: data.Search || [], loading: false });
-      // })
-      // .then(console.log(this.state.movies));
     } catch (err) {
       console.error(err);
       this.setState({ loading: false });

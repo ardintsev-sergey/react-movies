@@ -2,7 +2,7 @@ import React from 'react';
 
 class Search extends React.Component {
   state = {
-    search: '',
+    search: 'matrix',
     type: 'all',
   };
 
@@ -13,9 +13,6 @@ class Search extends React.Component {
   };
 
   handleFilter = (e) => {
-    if ((e.target.value = '')) {
-      this.setState({ search: 'matrix' });
-    }
     this.setState(
       () => ({ type: e.target.dataset.type }),
       () => {
@@ -35,6 +32,7 @@ class Search extends React.Component {
             value={this.state.search}
             onChange={(e) => this.setState({ search: e.target.value })}
             onKeyDown={this.handleKey}
+            onFocus={() => this.setState({ search: '' })}
           />
           <button
             onClick={() =>
